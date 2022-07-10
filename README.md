@@ -50,3 +50,8 @@ npm run test:unit
 ```sh
 npm run lint
 ```
+
+### Deploy to Github Pages
+
+1. `chmod +x deploy.sh` (first time only)
+1. `npm run deploy`
