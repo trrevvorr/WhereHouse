@@ -2,14 +2,21 @@
 import TheChat from "@/components/TheChat.vue";
 import TheMessageInput from "@/components/TheMessageInput.vue";
 import { ref } from "vue";
+import { useChatStore } from "@/stores/chat";
+
+const chatStore = useChatStore();
 
 const newMessageActive = ref(false);
 </script>
 
 <template>
   <div :class="{ main: true, newMessageActive }">
-    <TheChat class="convo" />
-    <TheMessageInput class="new-message" @focus="(isFocused) => (newMessageActive = isFocused)" />
+    <TheChat class="convo" :messages="chatStore.getMessages" />
+    <TheMessageInput
+      class="new-message"
+      @focus="(isFocused) => (newMessageActive = isFocused)"
+      @send="(newMessage) => chatStore.addMessage({ raw: newMessage, response: false })"
+    />
   </div>
 </template>
 

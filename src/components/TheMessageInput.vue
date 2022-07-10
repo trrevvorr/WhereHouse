@@ -24,6 +24,7 @@ function onMic() {
       class="input"
       @focus="emit('focus', true)"
       @blur="emit('focus', !!input)"
+      @keyup.enter="onSend"
     ></textarea>
     <button v-if="textMode" :disabled="!input" class="send-button" @click="onSend">
       <fa-icon icon="paper-plane" size="2x" />

@@ -1,15 +1,33 @@
 <script setup lang="ts">
+import { onMounted, ref, toRefs, watch } from "vue";
 import ChatMessage from "./ChatMessage.vue";
+
+const props = defineProps({
+  messages: Array,
+});
+
+const messageList = ref(null);
+watch(props, () => setTimeout(() => scrollToBottom(), 0));
+
+onMounted(() => {
+  scrollToBottom();
+});
+
+function scrollToBottom() {
+  if (messageList.value) {
+    (messageList.value as Element).scrollTop = (messageList.value as Element).scrollHeight;
+  }
+}
 </script>
 
 <template>
-  <div class="chat-container">
-    <ChatMessage message="vodka for dad's gift in wire basket in basement" />
+  <div class="chat-container" ref="messageList">
     <ChatMessage
-      message="pineapple floaty in bin furthest from front door on middle shelf in breezeway"
+      v-for="(message, i) in messages"
+      :key="i"
+      :message="(message as any).raw"
+      :isResponse="(message as any).response"
     />
-    <ChatMessage message="where is vodka for dad" />
-    <ChatMessage message="in wire basket in basement" :isResponse="true" />
   </div>
 </template>
 
